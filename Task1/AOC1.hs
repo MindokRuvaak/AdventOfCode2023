@@ -62,7 +62,6 @@ firstDigit str@(s:tr)
     | or $ stringMatches str = getMatchingString (stringMatches str) (map show [0..9])
     | otherwise              = firstDigit tr
 
-
 stringMatchesRev :: String -> [Bool]
 stringMatchesRev s = map ((`isPrefixOf` s) . reverse) digitStrings
 
