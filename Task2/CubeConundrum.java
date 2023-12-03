@@ -90,11 +90,9 @@ public class CubeConundrum {
     private static List<String> splitIntoSegments(String line) {
         List<String> lineSegmetns = new ArrayList<>();
         String[] idSplit = line.split(":");
-        // System.out.println(idSplit[0].substring(5));
         lineSegmetns.add(idSplit[0].substring(5));
         String[] setSplit = idSplit[1].split(";");
         for (String string : setSplit) {
-            // System.out.println(" " + string.trim());
             lineSegmetns.add(string);
         }
         return lineSegmetns;
