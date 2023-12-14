@@ -177,5 +177,9 @@ public class GearRatios {
         public int getRatio() {
             return ratio;
         }
+
+        public int[] getinds() {
+            return inds;
+        }
     }
 }
