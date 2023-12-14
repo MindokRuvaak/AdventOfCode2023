@@ -6,20 +6,39 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.IntStream;
 
+
 public class Scratchcards {
-    private static final String FILEPATH = "Task4/input.txt";
+    private static final String FILEPATH = "Task4/input.txt";//controllInput.txt";
 
     public static void main(String[] args) {
         // yeerp
         try {
             List<Scratchcard> scratchCards = loadScratchcards();
-            System.out.println(/* String.join("\n", */ scratchCards.toString()/* .split("\\], \\[")) */);
+            // System.out.println(/* String.join("\n", */ scratchCards.toString()/* .split("\\], \\[")) */);
             int pointSum = sumPoints(scratchCards);
-            System.out.println(pointSum);
+            // System.out.println(pointSum);
+            countWonCopies(scratchCards);
+            System.out.println(sumAmount(scratchCards));
         } catch (IOException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
+    }
+
+    private static void countWonCopies(List<Scratchcard> cards) {
+        for (Scratchcard sc : cards) {
+            for (int i = sc.getCardNumber(); i < sc.getCardNumber()+sc.setNumWinningHave(); i++) {
+                cards.get(i).addCopies(sc.getCopies());
+            }
+        }
+    }
+
+    private static int sumAmount(List<Scratchcard> scratchCards) {
+        int amount = 0;
+        for (Scratchcard scratchcard : scratchCards) {
+            amount += scratchcard.getCopies();
+        }
+        return amount;
     }
 
     private static int sumPoints(List<Scratchcard> scratchCards) {
@@ -61,13 +80,23 @@ public class Scratchcards {
         private final int[] haveNumbers;
         private final int points;
         private final int numWinningHave;
-
+        private int copies;
+        
         public Scratchcard(int cardNumber, int[] winningNumbers, int[] haveNumbers) {
             this.cardNumber = cardNumber;
             this.winningNumbers = winningNumbers;
             this.haveNumbers = haveNumbers;
             this.numWinningHave = setNumWinningHave();
             points = setPoints();
+            copies = 1;
+        }
+
+        public void addCopies(int n) {
+            copies+=n;
+        }
+
+        public int getCopies() {
+            return  copies;
         }
 
         public int getCardNumber() {
