@@ -3,9 +3,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class IfYouGiveASeedAFertilizer {
     private static final String FILEPATH = "Task5/input.txt";
@@ -13,7 +11,8 @@ public class IfYouGiveASeedAFertilizer {
     public static void main(String[] args) {
         // yerp
         try {
-            System.out.println(Arrays.toString(splitInputLines()));
+            // System.out.println(Arrays.toString(splitInputLines()));
+            Almanac a = new Almanac(splitInputLines());
         } catch (IOException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
@@ -33,44 +32,49 @@ public class IfYouGiveASeedAFertilizer {
     /**
      * Almanac
      */
-    public class Almanac {
-        private final List<Integer> seedList;
-        private final Map<Integer, Integer> seed2SoilMap;
-        private final Map<Integer, Integer> soil2FertMap;
-        private final Map<Integer, Integer> fert2WaterMap;
-        private final Map<Integer, Integer> water2LightMap;
-        private final Map<Integer, Integer> light2TempMap;
-        private final Map<Integer, Integer> temp2HumidMap;
-        private final Map<Integer, Integer> humid2LocMap;
+    public static class Almanac {
+        private final List<Long> seedList;
+        private final FarmMap seed2SoilMap;
+        private final FarmMap soil2FertMap;
+        private final FarmMap fert2WaterMap;
+        private final FarmMap water2LightMap;
+        private final FarmMap light2TempMap;
+        private final FarmMap temp2HumidMap;
+        private final FarmMap humid2LocMap;
 
         public Almanac(String[] inputs) {
             seedList = new ArrayList<>();
             for (String s : inputs[0].trim().split("\\s")) {
                 if (s.matches("[0-9]+")) {
-                    seedList.add(Integer.valueOf(s));
+                    seedList.add(Long.valueOf(s));
                 }
             }
-            seed2SoilMap   = setMap(inputs[1]);
-            soil2FertMap   = setMap(inputs[2]);
-            fert2WaterMap  = setMap(inputs[3]);
-            water2LightMap = setMap(inputs[4]);
-            light2TempMap  = setMap(inputs[5]);
-            temp2HumidMap  = setMap(inputs[6]);
-            humid2LocMap   = setMap(inputs[7]);
+            seed2SoilMap = new FarmMap(inputs[1].trim().split("\\n"));
+            soil2FertMap = new FarmMap(inputs[2].trim().split("\\n"));
+            fert2WaterMap = new FarmMap(inputs[3].trim().split("\\n"));
+            water2LightMap = new FarmMap(inputs[4].trim().split("\\n"));
+            light2TempMap = new FarmMap(inputs[5].trim().split("\\n"));
+            temp2HumidMap = new FarmMap(inputs[6].trim().split("\\n"));
+            humid2LocMap = new FarmMap(inputs[7].trim().split("\\n"));
         }
+    }
 
-        private Map<Integer, Integer> setMap(String line) {
-            Map<Integer, Integer> map = new HashMap<>();
-            for (String row : line.trim().split("\\n")) {
-                setRowRange(map, row.split(" +"));
-            }
-            return map;
-        }
+    private static class FarmMap {
+        private final List<long[]> sourceRangeList; // each element in list is of form {rangeStart, rangeEnd}
+        private final List<long[]> destinationRangeList; // same as above
 
-        private void setRowRange(Map<Integer, Integer> map, String[] row) {
-            int[] rangeData = new int[row.length];
-            for (int i = 0; i < row.length; i++) {
-                
+        FarmMap(String[] rows) {
+            sourceRangeList = new ArrayList<>();
+            destinationRangeList = new ArrayList<>();
+            for (String row : rows) {
+                if (row.length() != 0) {
+                    String[] splitRow = row.split(" ");
+                    long detinationStart = Long.valueOf(splitRow[0]);
+                    long sourceStart = Long.valueOf(splitRow[1]);
+                    long length = Long.valueOf(splitRow[2]);
+                    sourceRangeList.add(new long[] { sourceStart, sourceStart + length - 1 });
+                    destinationRangeList.add(new long[] { detinationStart, detinationStart + length - 1 });
+                }
             }
         }
     }
