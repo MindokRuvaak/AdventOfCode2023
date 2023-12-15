@@ -1,0 +1,42 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Current File",
+            "request": "launch",
+            "mainClass": "${file}"
+        },
+        {
+            "type": "java",
+            "name": "CubeConundrum",
+            "request": "launch",
+            "mainClass": "CubeConundrum",
+            "projectName": "AdventOfCode2023_96f1dfeb"
+        },
+        {
+            "type": "java",
+            "name": "GearRatios",
+            "request": "launch",
+            "mainClass": "GearRatios",
+            "projectName": "AdventOfCode2023_96f1dfeb"
+        },
+        {
+            "type": "java",
+            "name": "IfYouGiveASeedAFertilizer",
+            "request": "launch",
+            "mainClass": "IfYouGiveASeedAFertilizer",
+            "projectName": "AdventOfCode2023_96f1dfeb"
+        },
+        {
+            "type": "java",
+            "name": "Scratchcards",
+            "request": "launch",
+            "mainClass": "Scratchcards",
+            "projectName": "AdventOfCode2023_96f1dfeb"
+        }
+    ]
+}

@@ -14,7 +14,7 @@ public class IfYouGiveASeedAFertilizer {
         try {
             // System.out.println(Arrays.toString(splitInputLines()));
             Almanac a = new Almanac(splitInputLines());
-            System.out.println(a.findShortestDistance());
+            System.out.println(a.findShortestDistanceFromSeedRange());
             //MMMM
         } catch (IOException e) {
             // TODO Auto-generated catch block
@@ -59,6 +59,29 @@ public class IfYouGiveASeedAFertilizer {
             light2TempMap = new FarmMap(inputs[5].trim().split("\\n"));
             temp2HumidMap = new FarmMap(inputs[6].trim().split("\\n"));
             humid2LocMap = new FarmMap(inputs[7].trim().split("\\n"));
+        }
+
+        public long findShortestDistanceFromSeedRange() {
+            long shortest = Long.MAX_VALUE; //guarantee equal or longer lenght than corresponding seeds
+            List<long[]> seedRanges = convertSeedsToRanges();
+            for (long[] seedRange : seedRanges) {
+                for (long seed = seedRange[0]; seed < seedRange[1]; seed++) {
+                    long newVal = findLocationForSeed(seed);
+                    if (newVal < shortest) {
+                        shortest = newVal;
+                    }
+                }
+            }
+            return shortest;
+        }
+
+        private List<long[]> convertSeedsToRanges() {
+            List<long[]> rangeList = new ArrayList<>();
+            for (int i = 0; i < seedList.size()-1; i++) {
+                rangeList.add(new long[] {seedList.get(i), seedList.get(i) + seedList.get(i+1)});
+                i++;
+            }
+            return rangeList;
         }
 
         public long findShortestDistance() {
