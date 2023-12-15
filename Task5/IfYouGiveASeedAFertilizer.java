@@ -9,13 +9,12 @@ public class IfYouGiveASeedAFertilizer {
     private static final String FILEPATH = "Task5/input.txt";
     // private static final String FILEPATH = "Task5/controllInput.txt";
 
-
     public static void main(String[] args) {
         try {
             // System.out.println(Arrays.toString(splitInputLines()));
             Almanac a = new Almanac(splitInputLines());
             System.out.println(a.findShortestDistanceFromSeedRange());
-            //MMMM
+            // MMMM
         } catch (IOException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
@@ -62,7 +61,7 @@ public class IfYouGiveASeedAFertilizer {
         }
 
         public long findShortestDistanceFromSeedRange() {
-            long shortest = Long.MAX_VALUE; //guarantee equal or longer lenght than corresponding seeds
+            long shortest = Long.MAX_VALUE; // guarantee equal or longer lenght than corresponding seeds
             List<long[]> seedRanges = convertSeedsToRanges();
             for (long[] seedRange : seedRanges) {
                 for (long seed = seedRange[0]; seed < seedRange[1]; seed++) {
@@ -77,15 +76,15 @@ public class IfYouGiveASeedAFertilizer {
 
         private List<long[]> convertSeedsToRanges() {
             List<long[]> rangeList = new ArrayList<>();
-            for (int i = 0; i < seedList.size()-1; i++) {
-                rangeList.add(new long[] {seedList.get(i), seedList.get(i) + seedList.get(i+1)});
+            for (int i = 0; i < seedList.size() - 1; i++) {
+                rangeList.add(new long[] { seedList.get(i), seedList.get(i) + seedList.get(i + 1) });
                 i++;
             }
             return rangeList;
         }
 
         public long findShortestDistance() {
-            long shortest = Long.MAX_VALUE; //guarantee equal or longer lenght than corresponding seeds
+            long shortest = Long.MAX_VALUE; // guarantee equal or longer lenght than corresponding seeds
             for (Long seed : seedList) {
                 long newVal = findLocationForSeed(seed);
                 if (newVal < shortest) {
@@ -122,8 +121,8 @@ public class IfYouGiveASeedAFertilizer {
                     long length = Long.valueOf(splitRow[2]);
                     // OBS : half open range! the range start is inclusive and range end exclusive
                     // => [start, start+length)
-                    sourceRangeList.add(new long[] { sourceStart, sourceStart + length});
-                    destinationRangeList.add(new long[] { detinationStart, detinationStart + length});
+                    sourceRangeList.add(new long[] { sourceStart, sourceStart + length });
+                    destinationRangeList.add(new long[] { detinationStart, detinationStart + length });
                 }
             }
         }
@@ -133,22 +132,20 @@ public class IfYouGiveASeedAFertilizer {
                 long[] r = sourceRangeList.get(i);
                 if (inRange(r, source)) {
                     // if source in range "nr" i, then destination in respective range
-                    //distance between source and sourceRangeStart is equal to 
-                    //distance between destination and destinationRangeStart
+                    // distance between source and sourceRangeStart is equal to
+                    // distance between destination and destinationRangeStart
                     // => source - sourceRangeStart = x
                     // && destination = destinationRangeStart + x
                     // => destination = destinationRangeStart + (source - sourceRangeStart)
                     return destinationRangeList.get(i)[0] + (source - r[0]);
                 }
-                
             }
             // if source is not in any of the provided ranges: source == destination
             return source;
         }
-
     }
 
     public static boolean inRange(long[] r, long source) {
-        return source >= r[0] && source < r[r.length-1];
+        return source >= r[0] && source < r[r.length - 1];
     }
 }
